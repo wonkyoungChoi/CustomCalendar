@@ -1,5 +1,6 @@
 package com.example.customcalendar
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,11 +29,11 @@ class AdapterMonth: RecyclerView.Adapter<AdapterMonth.MonthViewHolder>() {
             binding.itemMonthText.text = "${calendar.get(Calendar.YEAR)}년 ${calendar.get(Calendar.MONTH) + 1}월"
             val tempMonth = calendar.get(Calendar.MONTH) - 1
 
-            var dayList: MutableList<Date> = MutableList(6 * 7) { Date() }
+            var dayList: MutableList<Date> = MutableList(6 * 7) { Date(calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH))}
             for(i in 0..5) {
                 for(k in 0..6) {
                     calendar.add(Calendar.DAY_OF_MONTH, (1-calendar.get(Calendar.DAY_OF_WEEK)) + k)
-                    dayList[i * 7 + k] = calendar.time
+                    dayList[i * 7 + k] = Date(calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
                 }
                 calendar.add(Calendar.WEEK_OF_MONTH, 1)
             }

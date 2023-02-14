@@ -1,6 +1,7 @@
 package com.example.customcalendar
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import com.example.customcalendar.databinding.ListItemDayBinding
 import com.example.customcalendar.databinding.ListItemMonthBinding
 import java.util.*
 
-class AdapterDay(private val tempMonth:Int, val dayList: MutableList<Date>): RecyclerView.Adapter<AdapterDay.DayView>() {
+class AdapterDay(private val tempMonth:Int, private val dayList: MutableList<Date>): RecyclerView.Adapter<AdapterDay.DayView>() {
     val ROW = 6
 
     inner class DayView(val binding: ListItemDayBinding): RecyclerView.ViewHolder(binding.root)
@@ -25,7 +26,8 @@ class AdapterDay(private val tempMonth:Int, val dayList: MutableList<Date>): Rec
             binding.itemDayLayout.setOnClickListener {
                 Toast.makeText(binding.root.context, "${dayList[position]}", Toast.LENGTH_SHORT).show()
             }
-            binding.itemDayText.text = dayList[position].date.toString()
+
+            binding.itemDayText.text = dayList[position].mDay.toString()
 
             binding.itemDayText.setTextColor(when(position % 7) {
                 0 -> Color.RED
@@ -33,7 +35,7 @@ class AdapterDay(private val tempMonth:Int, val dayList: MutableList<Date>): Rec
                 else -> Color.BLACK
             })
 
-            if(tempMonth != dayList[position].month - 1) {
+            if(tempMonth != dayList[position].mMonth - 1) {
                 binding.itemDayText.alpha = 0.4f
                 //binding.itemDayText.visibility = View.GONE
             }
